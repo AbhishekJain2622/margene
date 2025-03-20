@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image"; // Import Next.js Image
 import { Eye, EyeOff, Calendar, ArrowLeft } from "lucide-react";
 
 export default function Signup() {
@@ -14,10 +15,13 @@ export default function Signup() {
         
         {/* Left Side Image (Hidden on Small Screens) */}
         <div className="w-full md:w-1/2 hidden md:block">
-          <img
+          <Image
             src="/image21.png"
             alt="Sign Up"
+            width={500} 
+            height={500} 
             className="w-full h-full object-cover"
+            priority 
           />
         </div>
 

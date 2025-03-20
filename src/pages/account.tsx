@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image"; // Import Next.js Image component
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function Account() {
@@ -14,10 +15,13 @@ export default function Account() {
         
         {/* Left Side Image (Hidden on Small Screens) */}
         <div className="w-full md:w-1/2 hidden md:block">
-          <img
+          <Image
             src="/image21.png"
             alt="Login"
+            width={500} // Set width
+            height={500} // Set height
             className="w-full h-full object-cover"
+            priority // Ensures the image loads faster
           />
         </div>
 

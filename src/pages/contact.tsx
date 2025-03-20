@@ -24,11 +24,11 @@ export default function Contact() {
       {/* Page Title */}
       <div className="mt-10">
         <h1 className="text-xl md:text-2xl font-serif">Contact us</h1>
-        <p className="text-base md:text-lg text-gray-600">Let's Connect!</p>
+        <p className="text-base md:text-lg text-gray-600">Let&apos;s Connect!</p>
       </div>
 
       {/* Contact Section */}
-      <div className="mt-12 flex justify items-start relative">
+      <div className="mt-12 flex items-start relative">
         {/* Contact Form */}
         <div className="bg-gray-100 w-full max-w-xl p-10 rounded-lg shadow-md text-base">
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -40,6 +40,7 @@ export default function Contact() {
                 className="flex-1 p-2 border-b border-gray-500 bg-transparent focus:outline-none"
                 value={formData.fullname}
                 onChange={handleChange}
+                required
               />
               <input
                 type="email"
@@ -48,6 +49,7 @@ export default function Contact() {
                 className="flex-1 p-2 border-b border-gray-500 bg-transparent focus:outline-none"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
             </div>
             <input
@@ -57,6 +59,7 @@ export default function Contact() {
               className="w-full p-2 border-b border-gray-500 bg-transparent focus:outline-none"
               value={formData.subject}
               onChange={handleChange}
+              required
             />
             <textarea
               name="message"
@@ -65,6 +68,7 @@ export default function Contact() {
               className="w-full p-2 border-b border-gray-500 bg-transparent focus:outline-none"
               value={formData.message}
               onChange={handleChange}
+              required
             ></textarea>
             <button
               type="submit"
@@ -86,12 +90,13 @@ export default function Contact() {
       {/* Footer Section */}
       <footer className="text-center mt-16 text-sm">
         <p className="max-w-xl mx-auto">
-          Subscribe to the seasonal newsletter for invitations to new releases & additions to the collection.
+          Subscribe to the seasonal newsletter for invitations to new releases &amp; additions to the collection.
         </p>
         <input
           type="email"
           placeholder="Enter email"
           className="mt-3 p-2 border-b border-gray-500 bg-transparent focus:outline-none w-full max-w-md"
+          required
         />
         <button className="block mx-auto mt-3 px-6 py-2 bg-gray-300 hover:bg-gray-400 transition">
           Subscribe
