@@ -4,7 +4,14 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Layout from "../components/Layout";
 
-const products = [
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  images: string[];
+}
+
+const products: Product[] = [
   { 
     id: 1, 
     name: "Classic Tailored Trouser", 
@@ -22,42 +29,22 @@ const products = [
     name: "Elegant Evening Gown", 
     price: "$300",
     images: ["/images/products/product-3-random1.png", "/images/products/product-2-random1.png"]
-  },
-  { 
-    id: 1, 
-    name: "Classic Tailored Trouser", 
-    price: "$300",
-    images: ["/images/products/product-1-random1.png", "/images/products/product-2-random2.png"]
-  },
-  { 
-    id: 2, 
-    name: "Classy Tailored Jacket", 
-    price: "$300",
-    images: ["/images/products/product-2-random1.png", "/images/products/product-1-random1.png"]
-  },
-  { 
-    id: 3, 
-    name: "Elegant Evening Gown", 
-    price: "$300",
-    images: ["/images/products/product-3-random1.png", "/images/products/product-2-random1.png"]
-  },
+  }
 ];
 
 export default function Store() {
   const router = useRouter();
-  const [hoveredProductId, setHoveredProductId] = useState(null);
+  const [hoveredProductId, setHoveredProductId] = useState<number | null>(null);
 
-  const handleProductClick = (product) => {
-    // ✅ Store product data in localStorage before navigation
+  const handleProductClick = (product: Product) => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
     router.push(`/product/${product.id}`);
   };
 
   return (
     <Layout>
-      
-   {/* Background Images */}
-   <>
+      {/* Background Images */}
+      <>
         <Image
           src="/images/3.png"
           alt="Background decoration"
@@ -96,16 +83,16 @@ export default function Store() {
             onHoverStart={() => setHoveredProductId(product.id)}
             onHoverEnd={() => setHoveredProductId(null)}
           >
-           <motion.div 
-  className="w-full h-[500px] relative overflow-hidden transition-all duration-500 group-hover:rounded-full group-hover:scale-105"
->
-  <Image
-    src={hoveredProductId === product.id ? product.images[1] : product.images[0]}
-    alt={product.name}
-    fill
-    className="object-cover transition-opacity duration-500"
-  />
-</motion.div>
+            <motion.div 
+              className="w-full h-[500px] relative overflow-hidden transition-all duration-500 group-hover:rounded-full group-hover:scale-105"
+            >
+              <Image
+                src={hoveredProductId === product.id ? product.images[1] : product.images[0]}
+                alt={product.name}
+                fill
+                className="object-cover transition-opacity duration-500"
+              />
+            </motion.div>
             
             <div className="flex justify-between text-sm">
               <p className="font-medium">{product.name}</p>
@@ -117,48 +104,3 @@ export default function Store() {
     </Layout>
   );
 }
-
-
-
-
-
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-  {products.map((product) => (
-    <motion.div
-      key={product.id}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: product.id * 0.1 }}
-      className="cursor-pointer space-y-3 group"
-      onClick={() => router.push(`/product/${product.id}`)}
-    >
-
-      <div className="relative w-full h-[500px] transition-all duration-500 group-hover:rounded-[200px] group-hover:scale-105 overflow-hidden">
-        
-    
-        <Image
-          src={`/images/product-${product.id}-random1.png`} 
-          alt={product.name}
-          layout="fill"
-          objectFit="cover"
-          className="transition-opacity duration-500 group-hover:opacity-0"
-        />
-
-        <Image
-          src={`/images/product-${product.id}-random2.png`}
-          alt={product.name}
-          layout="fill"
-          objectFit="cover"
-          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        />
-
-      </div>
-
-   
-      <div className="flex justify-between text-sm">
-        <p className="font-medium">{product.name}</p>
-        <p className="font-semibold">${product.price}</p>
-      </div>
-    </motion.div>
-  ))}
-</div> */}

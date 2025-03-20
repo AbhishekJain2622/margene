@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import AccountBag from "../components/AccountBag"; // Import the component
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <div className="relative h-screen w-full">
       {/* Background Image */}
@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* 🔹 Top Right Navigation (Mobile-friendly) */}
       <nav className="absolute top-6 right-4 md:right-10 text-black text-xs md:text-sm uppercase z-20">
-        <AccountBag /> 
+        <AccountBag />
       </nav>
 
       {/* 🔹 Centered Navigation with Logo */}
@@ -31,8 +31,8 @@ export default function Home() {
           <Image
             src="/LOGO.png"
             alt="Margene Logo"
-            width={200} 
-            height={50} 
+            width={200}
+            height={50}
             className="object-contain"
           />
 

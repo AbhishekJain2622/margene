@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCart } from "../context/CartContext";
 
-export default function Layout({ children }) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [storeOpen, setStoreOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const { cartItems, removeFromCart, getTotalPrice } = useCart();
   const router = useRouter();
 
-  // Detect screen size
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -23,7 +26,6 @@ export default function Layout({ children }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Close menu on route change
   useEffect(() => {
     setMenuOpen(false);
     setBagOpen(false);
@@ -38,7 +40,6 @@ export default function Layout({ children }) {
 
   return (
     <div className="relative min-h-screen flex flex-row bg-white">
-      {/* ✅ Desktop Sidebar */}
       {!isMobile && (
         <aside className="w-64 bg-white p-7">
           <div className="mb-8">
@@ -74,7 +75,6 @@ export default function Layout({ children }) {
         </aside>
       )}
 
-      {/* ✅ Main Content */}
       <main className="flex-1 px-6 md:px-12 py-6">
         <div className="flex justify-end items-center pb-4 space-x-4">
           <Link href="/account" className="text-lg font-semibold">Account</Link>
@@ -85,7 +85,6 @@ export default function Layout({ children }) {
         {children}
       </main>
 
-      {/* ✅ Bag Sidebar */}
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: bagOpen ? "0%" : "100%" }}
@@ -96,35 +95,27 @@ export default function Layout({ children }) {
           Close ✖
         </button>
         <h2 className="text-xl font-bold">Your Bag ({cartItems.length})</h2>
-
         {cartItems.length === 0 ? (
           <p className="text-gray-600">Your cart is empty.</p>
         ) : (
           <div className="space-y-4">
-            {cartItems.map((item) => {
-  console.log("Item Data:", item); // Debugging log
-  
-  return (
-    <div key={item.id} className="flex items-center justify-between border-b py-2 space-x-3">
-      {/* Log the Image URL */}
-      {console.log("Image URL:", item.image)}
-
-      <Image
-        src={item.image ? item.image : "/default-product.jpg"} // Use default if missing
-        alt={item.name || "Product Image"}
-        width={64}
-        height={64}
-        className="rounded-md object-cover"
-        unoptimized
-      />
-      <div className="flex-1">
-        <p className="font-semibold">{item.name}</p>
-        <p>${item.price}</p>
-      </div>
-      <button onClick={() => removeFromCart(item.id)} className="text-red-500">Remove</button>
-    </div>
-  );
-})}
+            {cartItems.map((item) => (
+              <div key={item.id} className="flex items-center justify-between border-b py-2 space-x-3">
+                <Image
+                  src={item.image ? item.image : "/default-product.jpg"}
+                  alt={item.name || "Product Image"}
+                  width={64}
+                  height={64}
+                  className="rounded-md object-cover"
+                  unoptimized
+                />
+                <div className="flex-1">
+                  <p className="font-semibold">{item.name}</p>
+                  <p>${item.price}</p>
+                </div>
+                <button onClick={() => removeFromCart(item.id)} className="text-red-500">Remove</button>
+              </div>
+            ))}
             <p className="text-right text-lg font-bold mt-4">Subtotal: ${getTotalPrice().toFixed(2)}</p>
             <button onClick={handleCheckout} className="w-full bg-black text-white py-2 mt-4 rounded hover:bg-gray-800">
               Checkout

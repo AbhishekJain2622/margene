@@ -1,12 +1,9 @@
-
-
-
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AccountBag from "../../components/AccountBag";
 
-const allImages = [
+const allImages: string[] = [
   "/images/image1.png",
   "/images/image2.png",
   "/images/image3.png",
@@ -60,7 +57,7 @@ export default function CollectionGallery() {
         style={{ y: yPos }}
         className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4"
       >
-        {allImages.map((src, index) => {
+        {allImages.map((src: string, index: number) => {
           // Generate random height between 300-600px
           const randomHeight = 300 + Math.random() * 300;
           const aspectRatio = 0.66 + Math.random() * 0.5; // 0.66 to 1.16 ratio
@@ -75,7 +72,7 @@ export default function CollectionGallery() {
               className="relative overflow-hidden rounded-lg shadow-xl"
               style={{
                 height: `${randomHeight}px`,
-                aspectRatio: aspectRatio
+                aspectRatio: aspectRatio.toString(),
               }}
             >
               <Image

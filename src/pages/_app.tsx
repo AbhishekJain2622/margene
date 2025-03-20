@@ -2,9 +2,9 @@ import "../styles/globals.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { CartProvider } from "../context/CartContext";
+import type { AppProps } from "next/app";
 
-
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   return (
@@ -20,6 +20,6 @@ export default function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
-      </CartProvider>
+    </CartProvider>
   );
 }

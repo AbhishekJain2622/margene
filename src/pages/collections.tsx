@@ -2,8 +2,16 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-const isStorePage = true;
-const collections = [
+
+const isStorePage: boolean = true;
+
+interface CollectionItem {
+  id: number;
+  src: string;
+  title: string;
+}
+
+const collections: CollectionItem[] = [
   { id: 1, src: "/images/image1.png", title: "Collection 1" },
   { id: 2, src: "/images/image2.png", title: "Collection 2" },
   { id: 3, src: "/images/image3.png", title: "Collection 3" },
@@ -15,20 +23,16 @@ export default function Collection() {
 
   return (
     <Layout>
-        {isStorePage && (
-              <>
-                
-                <Image
-                  src="/images/2.png"
-                  alt="Background decoration"
-                  width={250}
-                  height={250}
-                  priority
-                  className="hidden md:block fixed bottom-0 left-2 w-[250px] h-auto opacity-100"
-                />
-              
-              </>
-            )}
+      {isStorePage && (
+        <Image
+          src="/images/2.png"
+          alt="Background decoration"
+          width={250}
+          height={250}
+          priority
+          className="hidden md:block fixed bottom-0 left-2 w-[250px] h-auto opacity-100"
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

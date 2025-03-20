@@ -1,11 +1,26 @@
 import Layout from "../components/Layout";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted", formData);
+  };
+
   return (
     <Layout>
-
-      
       {/* Page Title */}
       <div className="mt-10">
         <h1 className="text-xl md:text-2xl font-serif">Contact us</h1>
@@ -16,28 +31,40 @@ export default function Contact() {
       <div className="mt-12 flex justify items-start relative">
         {/* Contact Form */}
         <div className="bg-gray-100 w-full max-w-xl p-10 rounded-lg shadow-md text-base">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
               <input
                 type="text"
+                name="fullname"
                 placeholder="Fullname"
                 className="flex-1 p-2 border-b border-gray-500 bg-transparent focus:outline-none"
+                value={formData.fullname}
+                onChange={handleChange}
               />
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 className="flex-1 p-2 border-b border-gray-500 bg-transparent focus:outline-none"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <input
               type="text"
+              name="subject"
               placeholder="Subject"
               className="w-full p-2 border-b border-gray-500 bg-transparent focus:outline-none"
+              value={formData.subject}
+              onChange={handleChange}
             />
             <textarea
+              name="message"
               placeholder="Message"
-              rows="5"
+              rows={5}
               className="w-full p-2 border-b border-gray-500 bg-transparent focus:outline-none"
+              value={formData.message}
+              onChange={handleChange}
             ></textarea>
             <button
               type="submit"

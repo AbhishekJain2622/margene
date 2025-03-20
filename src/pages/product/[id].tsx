@@ -4,16 +4,23 @@ import Image from "next/image";
 import Layout from "../../components/Layout";
 import { useCart } from "../../context/CartContext";
 
+interface Product {
+  id: string;
+  name: string;
+  price: string;
+  images?: string[];
+}
+
 export default function ProductPage() {
   const router = useRouter();
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { addToCart } = useCart();
 
   useEffect(() => {
     const storedProduct = localStorage.getItem("selectedProduct");
     if (storedProduct) {
-      const parsedProduct = JSON.parse(storedProduct);
+      const parsedProduct: Product = JSON.parse(storedProduct);
       setProduct(parsedProduct);
       setSelectedImage(parsedProduct.images?.[0] || ""); // ✅ Check if images exist
     }
@@ -37,7 +44,7 @@ export default function ProductPage() {
 
           {/* Thumbnail Images */}
           <div className="flex space-x-4 mt-4">
-            {product.images?.length > 0 ? (
+            {product.images?.length ? (
               product.images.map((img, index) => (
                 <button key={index} onClick={() => setSelectedImage(img)} className="focus:outline-none">
                   <div className="relative w-16 h-16 rounded overflow-hidden border-2 border-transparent hover:border-black transition-all">
