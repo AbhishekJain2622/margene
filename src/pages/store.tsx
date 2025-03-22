@@ -1,8 +1,12 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Layout from "../components/Layout";
+import AccountBag from "../components/AccountBag";
+import FilterSidebar from "../components/FilterSidebar";
 
 interface Product {
   id: number;
@@ -12,29 +16,18 @@ interface Product {
 }
 
 const products: Product[] = [
-  { 
-    id: 1, 
-    name: "Classic Tailored Trouser", 
-    price: "$300",
-    images: ["/images/products/product-1-random1.png", "/images/products/product-2-random2.png"]
-  },
-  { 
-    id: 2, 
-    name: "Classy Tailored Jacket", 
-    price: "$300",
-    images: ["/images/products/product-2-random1.png", "/images/products/product-1-random1.png"]
-  },
-  { 
-    id: 3, 
-    name: "Elegant Evening Gown", 
-    price: "$300",
-    images: ["/images/products/product-3-random1.png", "/images/products/product-2-random1.png"]
-  }
+  { id: 1, name: "Classic Tailored Trouser", price: "300", images: ["/images/products/product-1-random1.png", "/images/products/product-2-random2.png"] },
+  { id: 2, name: "Classy Tailored Jacket", price: "300", images: ["/images/products/product-2-random1.png", "/images/products/product-1-random1.png"] },
+  { id: 3, name: "Elegant Evening Gown", price: "300", images: ["/images/products/product-3-random1.png", "/images/products/product-2-random1.png"] },
+  { id: 4, name: "Classic Tailored Trouser", price: "300", images: ["/images/products/product-1-random1.png", "/images/products/product-2-random2.png"] },
+  { id: 5, name: "Classy Tailored Jacket", price: "300", images: ["/images/products/product-2-random1.png", "/images/products/product-1-random1.png"] },
+  { id: 6, name: "Elegant Evening Gown", price: "300", images: ["/images/products/product-3-random1.png", "/images/products/product-2-random1.png"] }
 ];
 
 export default function Store() {
   const router = useRouter();
   const [hoveredProductId, setHoveredProductId] = useState<number | null>(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleProductClick = (product: Product) => {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
@@ -43,60 +36,66 @@ export default function Store() {
 
   return (
     <Layout>
-      {/* Background Images */}
-      <>
-        <Image
-          src="/images/3.png"
-          alt="Background decoration"
-          width={666}
-          height={571}
-          priority
-          className="hidden md:block fixed top-0 right-[55%] translate-x-1/2 w-[400px] h-[200px] opacity-100"
-        />
-        <Image
-          src="/images/2.png"
-          alt="Background decoration"
-          width={250}
-          height={250}
-          priority
-          className="hidden md:block fixed bottom-0 left-2 w-[250px] h-auto opacity-100"
-        />
-        <Image
-          src="/images/1.png"
-          alt="Background decoration"
-          width={300}
-          height={300}
-          priority
-          className="hidden md:block fixed bottom-0 right-[0px] top-[500px] w-[250px] h-auto opacity-100"
-        />
-      </>
+      {/* 🔹 Top Bar - Account & Filter Button */}
+      <div className="flex justify-between items-center px-4 sm:px-8 md:px-16 mt-8 sm:mt-12">
+        <AccountBag />
+        <p 
+          className="cursor-pointer hover:underline font-[Times_New_Roman] text-[16px] sm:text-[18px] md:text-[20px]"
+          onClick={() => setIsFilterOpen(true)}
+        >
+          Filter
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {/* 🔹 Filter Sidebar */}
+      {isFilterOpen && <FilterSidebar isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />}
+
+      {/* 🔹 Background Decorations */}
+      <Image 
+        src="/images/3.png" 
+        alt="Decoration" 
+        width={500} 
+        height={572} 
+        priority 
+        className="hidden md:block fixed top-0 right-1/2 translate-x-1/2 w-[250px] sm:w-[400px] md:w-[600px] opacity-60 z-5 pointer-events-none"
+      />
+      <Image 
+        src="/images/4.png" 
+        alt="Decoration" 
+        width={250} 
+        height={250} 
+        priority 
+        className="hidden md:block fixed bottom-0 left-2 w-[100px] sm:w-[150px] md:w-[200px] z-5 pointer-events-none"
+      />
+
+      {/* 🔹 Product Grid */}
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 px-4 sm:px-8 md:px-16 mt-6">
         {products.map((product) => (
           <motion.div
             key={product.id}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: product.id * 0.1 }}
-            className="cursor-pointer space-y-3 group"
+            className="cursor-pointer space-y-3 group relative z-20"
             onClick={() => handleProductClick(product)}
-            onHoverStart={() => setHoveredProductId(product.id)}
-            onHoverEnd={() => setHoveredProductId(null)}
+            onMouseEnter={() => setHoveredProductId(product.id)}
+            onMouseLeave={() => setHoveredProductId(null)}
           >
-            <motion.div 
-              className="w-full h-[500px] relative overflow-hidden transition-all duration-500 group-hover:rounded-full group-hover:scale-105"
-            >
+            {/* Product Image */}
+            <div className="relative w-full h-[350px] sm:h-[450px] md:h-[550px] overflow-hidden transition-all duration-500 group-hover:rounded-[200px] sm:group-hover:rounded-[200px] group-hover:scale-105 z-30">
               <Image
                 src={hoveredProductId === product.id ? product.images[1] : product.images[0]}
                 alt={product.name}
-                fill
-                className="object-cover transition-opacity duration-500"
+                layout="fill"
+                objectFit="cover"
+                className="transition-opacity duration-500"
               />
-            </motion.div>
-            
-            <div className="flex justify-between text-sm">
+            </div>
+
+            {/* Product Name & Price */}
+            <div className="w-full flex items-center justify-between text-[16px] sm:text-[18px] md:text-[20px] font-[Times_New_Roman]">
               <p className="font-medium">{product.name}</p>
-              <p className="font-semibold">{product.price}</p>
+              <p className="font-medium">{product.price}</p>
             </div>
           </motion.div>
         ))}

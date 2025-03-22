@@ -1,21 +1,21 @@
 import { useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useCart } from "../context/CartContext";
-import { useRouter } from "next/router";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import Login from "../pages/Login"; // Import the Login component
 
-interface CartItem {
+type CartItem = {
   id: string;
   name: string;
   price: number;
-  image: string;
-  quantity: number;
-}
+  image?: string;
+};
 
 export default function AccountBag() {
-  const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [bagOpen, setBagOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { cartItems, removeFromCart, getTotalPrice } = useCart();
   const router = useRouter();
 
   const handleCheckout = () => {
@@ -26,80 +26,103 @@ export default function AccountBag() {
   };
 
   return (
-    <div className="relative flex items-center space-x-4">
-      {/* Account Button */}
-      <button className="text-lg font-semibold">
-        <Link href="/account">Account</Link>
-      </button>
-
-      {/* Bag Button */}
-      <button onClick={() => setIsOpen(true)} className="text-lg font-semibold">
-        Bag ({cartItems.length})
-      </button>
-
-      {/* Cart Sidebar */}
-      {isOpen && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: "0%" }}
-          exit={{ x: "100%" }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="fixed top-0 right-0 h-full w-full sm:w-80 max-w-sm bg-white shadow-lg p-4 overflow-y-auto z-50"
+    <div>
+      {/* 🔹 Account & Bag Buttons - Fixed Alignment */}
+      <div className="fixed top-8 right-[125px] flex items-center gap-6 z-50">
+        <button 
+          onClick={() => setIsLoginOpen(true)} 
+          className="text-[22px] font-[Times_New_Roman] tracking-wide"
         >
-          {/* Close Button */}
-          <button onClick={() => setIsOpen(false)} className="text-red-500 font-bold mb-4">
-            Close ✖
-          </button>
+          Account
+        </button>
+        <button 
+          onClick={() => setBagOpen(true)} 
+          className="text-[22px] font-[Times_New_Roman] flex items-center gap-2"
+        >
+          <span>Bag</span>
+          <span className="text-[20px]">({cartItems?.length || 0})</span>
+        </button>
+      </div>
 
-          <h2 className="text-xl font-bold">Your Bag ({cartItems.length})</h2>
+      {/* 🔹 Login Modal */}
+      {isLoginOpen && <Login closeModal={() => setIsLoginOpen(false)} />}
 
-          {cartItems.length === 0 ? (
-            <p className="text-gray-600">Your cart is empty.</p>
-          ) : (
-            <div className="space-y-4">
-              {cartItems.map((item: CartItem) => (
-                <div key={item.id} className="flex items-center justify-between border-b py-2 space-x-3">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={64}
-                    height={64}
-                    className="object-cover rounded-md"
-                  />
-                  <div className="flex-1">
-                    <p className="font-semibold">{item.name}</p>
-                    <p>${item.price.toFixed(2)}</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => updateQuantity(item.id, -1)}
-                      className="px-2 border rounded disabled:opacity-50"
-                      disabled={item.quantity <= 1}
-                    >
-                      -
-                    </button>
-                    <span className="px-2">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.id, 1)} className="px-2 border rounded">
-                      +
-                    </button>
-                  </div>
-                  <button onClick={() => removeFromCart(item.id)} className="text-red-500">
-                    Remove
-                  </button>
+      {/* 🔹 Bag Sidebar - Improved Layout */}
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: bagOpen ? "0%" : "100%" }}
+        transition={{ type: "spring", stiffness: 100 }}
+        className={`fixed top-7 bottom-5 right-0 h-[90vh] w-full max-w-[350px] bg-white shadow-lg p-6 overflow-y-auto transition-all z-[100] border border-gray-300 ${
+          bagOpen ? "block" : "hidden"
+        }`}
+      >
+        {/* Close Button */}
+        <button 
+          onClick={() => setBagOpen(false)} 
+          className="text-[24px] font-bold absolute top-4 right-4"
+        >
+          ✖
+        </button>
+
+        <h2 className="text-xl font-bold mb-6">Bag ({cartItems?.length || 0})</h2>
+
+        {/* 🔹 Cart Content */}
+        {cartItems.length === 0 ? (
+          <p className="text-gray-600">Your cart is empty.</p>
+        ) : (
+          <div className="space-y-4">
+            {cartItems.map((item: CartItem) => (
+              <div key={item.id} className="flex items-center gap-4 border-b pb-4">
+                {/* ✅ Image Alignment Fixed */}
+                <Image
+                  src={item.image || "/image21.png"}
+                  alt={item.name}
+                  width={70}
+                  height={70}
+                  className="rounded-md object-cover"
+                  unoptimized
+                />
+
+                {/* ✅ Text & Details - Adjusted Width */}
+                <div className="flex-1">
+                  <p className="text-[22px] font-[Times_New_Roman]">{item.name}</p>
+                  <p className="text-gray-500 text-[16px]">Red / 5</p>
+                  <p className="text-black font-medium">${item.price.toFixed(2)}</p>
                 </div>
-              ))}
 
-              <p className="text-right text-lg font-bold mt-4">Subtotal: ${getTotalPrice().toFixed(2)}</p>
-              <button
-                onClick={handleCheckout}
-                className="w-full bg-black text-white py-2 mt-4 rounded hover:bg-gray-800 transition"
-              >
-                Checkout
-              </button>
-            </div>
-          )}
-        </motion.div>
-      )}
+                {/* Remove Button */}
+                <button 
+                  onClick={() => removeFromCart(item.id)} 
+                  className="text-red-500 text-[16px]"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+
+            {/* Subtotal */}
+            <p className="text-right text-lg font-bold mt-4">
+              Subtotal: ${getTotalPrice()?.toFixed(2) || "0.00"}
+            </p>
+
+            {/* Checkout Button */}
+            <button
+              onClick={handleCheckout}
+              className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 text-[18px]"
+            >
+              Checkout
+            </button>
+
+            {/* Go to Cart Button */}
+            <button
+              onClick={() => router.push("/cart")}
+              className="w-full mt-2 border border-gray-700 text-black py-3 rounded-md text-[18px]"
+            >
+              Go to cart
+            </button>
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 }

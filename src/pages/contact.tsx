@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import AccountBag from "../components/AccountBag";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ export default function Contact() {
 
   return (
     <Layout>
+      <AccountBag/>
       {/* Page Title */}
       <div className="mt-10">
         <h1 className="text-xl md:text-2xl font-serif">Contact us</h1>
