@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* 🔹 Logo (Bigger) */}
   <div className="mb-12 flex justify-between items-center">
     <Link href="/">
-      <Image src="/logo.png" alt="Logo" width={500} height={100} priority />
+      <Image src="/LOGO.png" alt="Logo" width={500} height={100} priority />
     </Link>
     {/* Close Button (Mobile) */}
     <button className="lg:hidden" onClick={() => setMenuOpen(false)}>
