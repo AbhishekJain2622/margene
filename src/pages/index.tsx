@@ -27,8 +27,8 @@ const Home: FC = () => {
         />
       </div>
 
-      {/* 🔹 Top Right Navigation (Account Button opens Login Modal) */}
-      <nav className="absolute top-6 right-4 md:right-10 text-black text-xs md:text-sm z-20">
+      {/* 🔹 Top Right Navigation (Account Button) */}
+      <nav className="absolute top-6 right-4 md:right-10 text-black text-xs md:text-sm z-20 flex space-x-8">
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -36,14 +36,13 @@ const Home: FC = () => {
           }}
           className="hover:italic transition-all"
         >
-     
         </button>
         <AccountBag />
       </nav>
 
       {/* 🔹 Centered Navigation with Logo */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4">
-        <div className="flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-12 text-[26px]">
+        <div className="flex flex-col md:flex-row items-center space-y-16 md:space-y-0 md:space-x-24 text-[28px]">
           {/* 🔹 SHOP DROPDOWN */}
           <div className="relative">
             <button
@@ -52,26 +51,26 @@ const Home: FC = () => {
                 setStoreOpen(!storeOpen);
                 setCollectionOpen(false);
               }}
-              className="hover:italic transition-all"
+              className="hover:italic transition-all py-2"
             >
               Shop
             </button>
             {storeOpen && (
-              <div className="absolute top-full left-3 text-black text-[20px] mt-4 p-4 space-y-3 min-w-[160px]">
-                <Link href="/store" className="py-2 px-4 hover:italic">
+              <div className="absolute top-full left-3 text-black text-[22px] mt-0 p-8 space-y-3 min-w-[200px]">
+                <Link href="/store" className="block py-3 px-6 hover:italic">
                   Trousers
                 </Link>
-                <Link href="/store/accessories" className="block py-2 px-4 hover:italic">
+                <Link href="/store/accessories" className="block py-3 px-6 hover:italic">
                   Accessories
                 </Link>
-                <Link href="/store/custom" className="block py-2 px-4 hover:italic">
+                <Link href="/store/custom" className="block py-3 px-6 hover:italic">
                   Custom
                 </Link>
               </div>
             )}
           </div>
 
-          <Link href="/alter" className="hover:italic transition-all">
+          <Link href="/alter" className="hover:italic transition-all py-2">
             Alter
           </Link>
 
@@ -79,8 +78,8 @@ const Home: FC = () => {
           <Image
             src="/LOGO.png"
             alt="Margene Logo"
-            width={453}
-            height={96}
+            width={480}
+            height={100}
             className="object-contain"
           />
 
@@ -92,36 +91,36 @@ const Home: FC = () => {
                 setCollectionOpen(!collectionOpen);
                 setStoreOpen(false);
               }}
-              className="hover:italic transition-all"
+              className="hover:italic transition-all py-2"
             >
               Collection
             </button>
             {collectionOpen && (
-              <div className="absolute top-full left-7 rounded-md text-black text-[20px] mt-4 p-4 space-y-3 min-w-[160px]">
-                <Link href="/collections/spring" className="block py-2 px-4 hover:italic">
+              <div className="absolute top-full left-7 rounded-md text-black text-[22px] mt-0 p-8 space-y-2 min-w-[200px]">
+                <Link href="/collections/spring" className="block py-3 px-6 hover:italic">
                   Edition 1
                 </Link>
-                <Link href="/collections/summer" className="block py-2 px-4 hover:italic">
+                <Link href="/collections/summer" className="block py-3 px-6 hover:italic">
                   Edition 2
                 </Link>
-                <Link href="/collections/fall" className="block py-2 px-4 rounded-md hover:italic">
+                <Link href="/collections/fall" className="block py-3 px-6 rounded-md hover:italic">
                   Edition 3
                 </Link>
               </div>
             )}
           </div>
 
-          <Link href="/about" className="hover:italic transition-all">
+          <Link href="/about" className="hover:italic transition-all py-2">
             About
           </Link>
-          <Link href="/stories" className="hover:italic transition-all">
+          <Link href="/stories" className="hover:italic transition-all py-2">
             Stories
           </Link>
         </div>
       </div>
 
       {/* 🔹 Footer Navigation */}
-      <footer className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-[15px] flex flex-wrap justify-center space-x-4 md:space-x-8 text-white text-xs uppercase z-10">
+      <footer className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-[16px] flex flex-wrap justify-center space-x-12 text-white text-xs uppercase z-10">
         <Link href="/terms" className="hover:italic transition-all">
           Terms of Use
         </Link>

@@ -2,23 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light Mode */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  /* Custom Font Face (if needed) */
+  /* @font-face {
+    font-family: 'Times New Roman';
+    src: url('/fonts/times-new-roman.woff2') format('woff2');
+  } */
+
+  /* Light Mode Default */
+  :root {
+    --background: 255 255 255; /* Using RGB values for better Tailwind compatibility */
+    --foreground: 23 23 23;
+  }
+
+  /* Dark Mode */
+  .dark {
+    --background: 10 10 10;
+    --foreground: 237 237 237;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-/* Dark Mode */
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-body {
-  @apply bg-[var(--background)] text-[var(--foreground)] font-sans;
-}
-
-/* Custom Font */
-.font-times {
-  @apply font-serif text-[20px];
+@layer utilities {
+  /* Custom Font Class */
+  .font-times {
+    font-family: 'Times New Roman', Times, serif;
+    @apply text-[20px] leading-normal;
+  }
 }

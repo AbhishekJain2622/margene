@@ -7,6 +7,7 @@ import Image from "next/image";
 import Layout from "../components/Layout";
 import AccountBag from "../components/AccountBag";
 import FilterSidebar from "../components/FilterSidebar";
+import { FooterStore } from "../components/footerstore";
 
 interface Product {
   id: number;
@@ -35,12 +36,13 @@ export default function Store() {
   };
 
   return (
+    <>
     <Layout>
       {/* 🔹 Top Bar - Account & Filter Button */}
-      <div className="flex justify-between items-center px-4 sm:px-8 md:px-16 mt-8 sm:mt-12">
-        <AccountBag />
+      <div className="flex  items-center px-2 sm:px-6 md:px-12 mt-8 sm:mt-12">     
+           <AccountBag />
         <p 
-          className="cursor-pointer hover:underline font-[Times_New_Roman] text-[16px] sm:text-[18px] md:text-[20px]"
+          className="cursor-pointer hover:underline ml-[94%] font-[Times_New_Roman] text-[16px] sm:text-[18px] md:text-[20px]"
           onClick={() => setIsFilterOpen(true)}
         >
           Filter
@@ -63,43 +65,45 @@ export default function Store() {
         src="/images/4.png" 
         alt="Decoration" 
         width={250} 
-        height={250} 
+        height={300} 
         priority 
-        className="hidden md:block fixed bottom-0 left-2 w-[100px] sm:w-[150px] md:w-[200px] z-5 pointer-events-none"
+        className="hidden md:block fixed bottom-0 left-0 h-[420px] w-[150px] sm:w-[150px] md:w-[200px] z-5 pointer-events-none"
       />
-
-      {/* 🔹 Product Grid */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 px-4 sm:px-8 md:px-16 mt-6">
-        {products.map((product) => (
-          <motion.div
-            key={product.id}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: product.id * 0.1 }}
-            className="cursor-pointer space-y-3 group relative z-20"
-            onClick={() => handleProductClick(product)}
-            onMouseEnter={() => setHoveredProductId(product.id)}
-            onMouseLeave={() => setHoveredProductId(null)}
-          >
-            {/* Product Image */}
-            <div className="relative w-full h-[350px] sm:h-[450px] md:h-[550px] overflow-hidden transition-all duration-500 group-hover:rounded-[200px] sm:group-hover:rounded-[200px] group-hover:scale-105 z-30">
-              <Image
-                src={hoveredProductId === product.id ? product.images[1] : product.images[0]}
-                alt={product.name}
-                layout="fill"
-                objectFit="cover"
-                className="transition-opacity duration-500"
-              />
-            </div>
-
-            {/* Product Name & Price */}
-            <div className="w-full flex items-center justify-between text-[16px] sm:text-[18px] md:text-[20px] font-[Times_New_Roman]">
-              <p className="font-medium">{product.name}</p>
-              <p className="font-medium">{product.price}</p>
-            </div>
-          </motion.div>
-        ))}
+{/* 🔹 Product Grid (Shifted Right) */}
+<div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-20 px-4 sm:px-8 md:px-16 mt-6 md:ml-0 lg:ml-15 xl:ml-20">
+  {products.map((product) => (
+    <motion.div
+      key={product.id}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: product.id * 0.1 }}
+      className="cursor-pointer space-y-3 group relative z-20"
+      onClick={() => handleProductClick(product)}
+      onMouseEnter={() => setHoveredProductId(product.id)}
+      onMouseLeave={() => setHoveredProductId(null)}
+    >
+      {/* Product Image */}
+      <div className="relative h-[523px] sm:h-[523px] md:h-[523px] w-[400px] overflow-hidden transition-all duration-500 group-hover:rounded-[200px] sm:group-hover:rounded-[200px] group-hover:scale-105 z-30">
+        <Image
+          src={hoveredProductId === product.id ? product.images[1] : product.images[0]}
+          alt={product.name}
+          layout="fill"
+          objectFit="cover"
+          className="transition-opacity duration-500"
+        />
       </div>
+
+      {/* Product Name & Price */}
+      <div className="w-full flex items-center gap-[35%] text-[16px] sm:text-[18px] md:text-[20px] font-[Times_New_Roman]">
+        <p className="font-medium">{product.name}</p>
+        <p className="font-medium">{product.price}</p>
+      </div>
+    </motion.div>
+  ))}
+</div>
+
     </Layout>
+          <FooterStore />
+          </>
   );
 }

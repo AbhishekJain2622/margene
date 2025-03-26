@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react"; // For mobile menu toggle button
 
 interface LayoutProps {
   children: ReactNode;
@@ -29,74 +30,56 @@ export default function Layout({ children }: LayoutProps) {
   }, [router.pathname]);
 
   return (
-    <div className="relative min-h-screen flex flex-col lg:flex-row bg-white font-[Times_New_Roman] text-[22px]">
-      {/* Mobile Menu Button */}
-      {isMobile && (
-        <button
-          className="absolute top-5 left-5 z-50 p-3 bg-white text-gray-800 shadow-md rounded-md border border-gray-300"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
-      )}
+    <div className="flex min-h-screen">
+      {/* 🔹 Sidebar */}
+      <aside className={`fixed top-5 left-10 bg-white p-10 z-40 flex flex-col transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:w-72`}>
+      {/* 🔹 Logo (Bigger) */}
+  <div className="mb-12 flex justify-between items-center">
+    <Link href="/">
+      <Image src="/logo.png" alt="Logo" width={500} height={100} priority />
+    </Link>
+    {/* Close Button (Mobile) */}
+    <button className="lg:hidden" onClick={() => setMenuOpen(false)}>
+      <X size={32} />
+    </button>
+  </div>
 
-      {/* Sidebar (Mobile & Desktop) */}
+  {/* 🔹 Navigation Links (More Gap) */}
+  <nav className="text-[26px] font-[Times New Roman]  space-y-14 ml-2">
+    <Link href="/collections" className="block hover:italic" onClick={() => setMenuOpen(false)}>Collections</Link>
+
+    {/* 🔹 Shop Dropdown */}
+    <div>
+      <button className="w-full text-left hover:italic" onClick={() => setStoreOpen(!storeOpen)}>
+        Shop
+      </button>
       <AnimatePresence>
-        {menuOpen || !isMobile ? (
-          <motion.aside
-            initial={{ x: -300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={`fixed lg:static top-0 left-0 w-64 bg-white p-7 m-5 h-full  z-40`}
-          >
-            {/* Logo + Close Button */}
-            <div className="mb-8 flex justify-between items-center">
-              <Link href="/">
-                <Image src="/logo.png" alt="Logo" width={321} height={68} priority />
-              </Link>
-
-              {/* Close Button (Mobile) */}
-              {isMobile && (
-                <button
-                  className="text-gray-600 text-2xl"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Navigation Links */}
-            <nav className="relative text-[22px] font-[Times New Roman] font-[solid] space-y-9 m-3">
-              <Link href="/collections" className="block hover:italic">
-                Collections
-              </Link>
-
-              {/* Shop Dropdown */}
-              <div>
-                <button className="w-full text-left hover:italic" onClick={() => setStoreOpen(!storeOpen)}>
-                  Shop
-                </button>
-                {storeOpen && (
-                  <div className="pl-6 space-y-2 mt-4">
-                    <Link href="/store" className="block hover:italic">Trousers</Link>
-                    <Link href="/store/accessories" className="block hover:italic">Accessories</Link>
-                    <Link href="/store/custom" className="block hover:italic">Custom</Link>
-                  </div>
-                )}
-              </div>
-
-              <Link href="/alter" className="block hover:italic">Alter</Link>
-              <Link href="/stories" className="block hover:italic">Stories</Link>
-              <Link href="/about" className="block hover:italic">About</Link>
-            </nav>
-          </motion.aside>
-        ) : null}
+        {storeOpen && (
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="pl-6 space-y-4 mt-5">
+            <Link href="/store" className="block hover:italic" onClick={() => setMenuOpen(false)}>Trousers</Link>
+            <Link href="/store/accessories" className="block hover:italic" onClick={() => setMenuOpen(false)}>Accessories</Link>
+            <Link href="/store/custom" className="block hover:italic" onClick={() => setMenuOpen(false)}>Custom</Link>
+          </motion.div>
+        )}
       </AnimatePresence>
+    </div>
 
-      {/* Main Content */}
-      <main className="flex-1 px-6 md:px-12 py-6 m-5">{children}</main>
+    <Link href="/alter" className="block hover:italic" onClick={() => setMenuOpen(false)}>Alter</Link>
+    <Link href="/stories" className="block hover:italic" onClick={() => setMenuOpen(false)}>Stories</Link>
+    <Link href="/about" className="block hover:italic" onClick={() => setMenuOpen(false)}>About</Link>
+  </nav>
+</aside>
+
+
+      {/* 🔹 Mobile Menu Button */}
+      <button className="fixed top-5 left-5 z-50 lg:hidden  p-2  rounded-md" onClick={() => setMenuOpen(true)}>
+        <Menu size={28} />
+      </button>
+
+      {/* 🔹 Main Content */}
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${menuOpen ? "blur-sm" : ""} lg:ml-64`}>
+        <main className="flex-1 px-6 md:px-12 py-6 overflow-auto">{children}</main>
+      </div>
     </div>
   );
 }
