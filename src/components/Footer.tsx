@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="text-left">
           <p className="font-semibold text-lg sm:text-xl">Keep in touch !</p>
           <p className="italic text-sm sm:text-base text-gray-600">
-            Stay in the loop and be the first to know about what's coming next
+            Stay in the loop and be the first to know about what&apos;s coming next
           </p>
         </div>
 
