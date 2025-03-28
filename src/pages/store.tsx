@@ -42,7 +42,7 @@ export default function Store() {
       <div className="flex  items-center px-2 sm:px-6 md:px-12 mt-8 sm:mt-12">     
            <AccountBag />
         <p 
-          className="cursor-pointer hover:underline ml-[94%] font-[Times_New_Roman] text-[16px] sm:text-[18px] md:text-[20px]"
+          className="cursor-pointer hover:underline ml-[94%]  text-[19px] sm:text-[18px] md:text-[20px]"
           onClick={() => setIsFilterOpen(true)}
         >
           Filter
@@ -94,7 +94,7 @@ export default function Store() {
       </div>
 
       {/* Product Name & Price */}
-      <div className="w-full flex items-center gap-[35%] text-[16px] sm:text-[18px] md:text-[20px] font-[Times_New_Roman]">
+      <div className="w-full flex items-center gap-[40%] text-[16px] sm:text-[18px] md:text-[20px]">
         <p className="font-medium">{product.name}</p>
         <p className="font-medium">{product.price}</p>
       </div>

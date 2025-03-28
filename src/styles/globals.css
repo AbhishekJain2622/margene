@@ -1,18 +1,16 @@
+/* Import Adobe Fonts - Must be at the top */
+@import url("https://use.typekit.net/tjd4haf.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Custom Font Face (if needed) */
-  /* @font-face {
-    font-family: 'Times New Roman';
-    src: url('/fonts/times-new-roman.woff2') format('woff2');
-  } */
-
-  /* Light Mode Default */
+  /* Define Global Font */
   :root {
-    --background: 255 255 255; /* Using RGB values for better Tailwind compatibility */
+    --background: 255 255 255;
     --foreground: 23 23 23;
+    --custom-font: "utile-display", sans-serif; /* Replace with actual font name */
   }
 
   /* Dark Mode */
@@ -23,13 +21,12 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--custom-font);
   }
 }
 
 @layer utilities {
-  /* Custom Font Class */
-  .font-times {
-    font-family: 'Times New Roman', Times, serif;
-    @apply text-[20px] leading-normal;
+  .font-custom {
+    font-family: var(--custom-font);
   }
 }

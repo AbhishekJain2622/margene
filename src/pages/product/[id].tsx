@@ -108,7 +108,7 @@ export default function ProductPage() {
 
         {/* Product Details on the Right */}
         <div className="w-full md:w-1/3 mt-8 md:mt-0">
-          <h2 className="text-xl sm:text-2xl font-bold">{product.name}</h2>
+          <h2 className="text-xl mt-5 sm:text-2xl ">{product.name}</h2>
           <p className="text-lg sm:text-xl text-gray-700 mt-2">${product.price.toFixed(2)}</p>
 
           {/* Color Selection */}

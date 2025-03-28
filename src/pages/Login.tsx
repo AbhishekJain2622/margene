@@ -21,7 +21,7 @@ export default function Login({ closeModal }: LoginProps) {
       {/* Increased width and padding for larger box */}
       <div
         className="bg-white p-10 shadow-lg w-[450px] relative"
-        style={{ fontFamily: "Times New Roman, serif" }} // Ensuring Times New Roman
+        // style={{ fontFamily: "Times New Roman, serif" }} // Ensuring Times New Roman
       >
         {/* Close Button */}
         <button

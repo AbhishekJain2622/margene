@@ -28,16 +28,16 @@ export default function AccountBag() {
   return (
     <div>
       {/* 🔹 Account & Bag Buttons */}
-      <div className="fixed top-6 right-4 md:right-[144px] flex items-center gap-4 md:gap-6  z-50">
+      <div className="fixed top-8 right-4 md:right-[144px] flex items-center gap-4 md:gap-6  z-50">
         <button
           onClick={() => setIsLoginOpen(true)}
-          className="text-lg md:text-[22px] font-[Times_New_Roman] tracking-wide"
+          className="text-lg md:text-[20px] tracking-wide"
         >
           Account
         </button>
         <button
           onClick={() => setBagOpen(true)}
-          className="text-lg md:text-[22px] font-[Times_New_Roman] flex items-center gap-2"
+          className="text-lg md:text-[20px] flex items-center gap-2"
         >
           <span>Bag</span>
           <span className="text-base md:text-[20px]">({cartItems?.length || 0})</span>
@@ -83,7 +83,7 @@ export default function AccountBag() {
 
                 {/* ✅ Text & Details */}
                 <div className="flex-1">
-                  <p className="text-[20px] md:text-xl font-[Times_New_Roman] ">{item.name}</p>
+                  <p className="text-[20px] md:text-xl  ">{item.name}</p>
                   <p className="text-gray-500 text-sm">Red / 5</p>
                   <p className="text-black font-medium text-md md:text-lg">${item.price.toFixed(2)}</p>
                 </div>

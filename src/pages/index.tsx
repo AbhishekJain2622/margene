@@ -56,8 +56,8 @@ const Home: FC = () => {
               Shop
             </button>
             {storeOpen && (
-              <div className="absolute top-full left-3 text-black text-[22px] mt-0 p-8 space-y-3 min-w-[200px]">
-                <Link href="/store" className="block py-3 px-6 hover:italic">
+              <div className="absolute top-full left-3 text-black text-[22px] mt-0 p-2 space-y-0 min-w-[200px]">
+                <Link href="/store" className="block py-1 px-6 hover:italic">
                   Trousers
                 </Link>
                 <Link href="/store/accessories" className="block py-3 px-6 hover:italic">
@@ -96,8 +96,8 @@ const Home: FC = () => {
               Collection
             </button>
             {collectionOpen && (
-              <div className="absolute top-full left-7 rounded-md text-black text-[22px] mt-0 p-8 space-y-2 min-w-[200px]">
-                <Link href="/collections/spring" className="block py-3 px-6 hover:italic">
+              <div className="absolute top-full left-7 rounded-md text-black text-[22px] mt-0 p-2 space-y-2 min-w-[200px]">
+                <Link href="/collections/1" className="block py-3 px-6 hover:italic">
                   Edition 1
                 </Link>
                 <Link href="/collections/summer" className="block py-3 px-6 hover:italic">
@@ -120,7 +120,7 @@ const Home: FC = () => {
       </div>
 
       {/* 🔹 Footer Navigation */}
-      <footer className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-[16px] flex flex-wrap justify-center space-x-12 text-white text-xs uppercase z-10">
+      <footer className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-[20px] flex flex-wrap justify-center space-x-12 text-white uppercase z-10">
         <Link href="/terms" className="hover:italic transition-all">
           Terms of Use
         </Link>

@@ -45,7 +45,7 @@ export default function Layout({ children }: LayoutProps) {
   </div>
 
   {/* 🔹 Navigation Links (More Gap) */}
-  <nav className="text-[26px] font-[Times New Roman]  space-y-14 ml-2">
+  <nav className="text-[24px] font-[utile display]  space-y-14 ml-2">
     <Link href="/collections" className="block hover:italic" onClick={() => setMenuOpen(false)}>Collections</Link>
 
     {/* 🔹 Shop Dropdown */}
